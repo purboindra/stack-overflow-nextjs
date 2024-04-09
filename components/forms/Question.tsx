@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import React, { useRef, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-
+import { useRouter, usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -22,11 +22,18 @@ import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
 
+interface Props {
+  mongoUserId: string;
+}
+
 const type: any = "create";
 
-const Question = () => {
+const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const router = useRouter();
+  const pahtname = usePathname();
 
   //   const log = () => {
   //     if (editorRef.current) {
@@ -46,8 +53,14 @@ const Question = () => {
   async function onSubmit(values: z.infer<typeof questionSchema>) {
     setIsSubmitting(true);
     try {
-      await createQuestion({});
-      // make a async call to your api
+      await createQuestion({
+        title: values.title,
+        content: values.explanation,
+        tags: values.tags,
+        author: JSON.parse(mongoUserId),
+      });
+
+      router.push("/");
     } catch (error) {
     } finally {
       setIsSubmitting(false);

@@ -1,3 +1,5 @@
+"use client";
+
 import { Input } from "@/components/ui/input";
 import Image from "next/image";
 import React from "react";
@@ -17,6 +19,7 @@ export default function GlobalSearch() {
           type="text"
           placeholder="Search"
           value=""
+          onChange={() => {}}
           className="paragraph-regular no-focus placeholder background-light800_darkgradient border-none shadow-none outline-none"
         />
       </div>
