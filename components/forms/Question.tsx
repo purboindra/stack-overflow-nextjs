@@ -35,12 +35,6 @@ const Question = ({ mongoUserId }: Props) => {
   const router = useRouter();
   const pahtname = usePathname();
 
-  //   const log = () => {
-  //     if (editorRef.current) {
-  //       console.log(editorRef.current.getContent());
-  //     }
-  //   };
-
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
     defaultValues: {
@@ -58,6 +52,7 @@ const Question = ({ mongoUserId }: Props) => {
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
+        path: pahtname,
       });
 
       router.push("/");
