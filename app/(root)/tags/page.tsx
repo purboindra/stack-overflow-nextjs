@@ -2,11 +2,12 @@ import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/contants/filter";
-import { getAllUsers } from "@/lib/actions/user.action";
+import { getAllTags } from "@/lib/actions/tag.action";
+import Link from "next/link";
 import React from "react";
 
 export default async function page() {
-  const result = await getAllUsers({});
+  const result = await getAllTags({});
 
   return (
     <>
@@ -26,9 +27,29 @@ export default async function page() {
         />
       </div>
       <section className="mt-12 flex flex-wrap gap-4">
-        {result.length > 0 ? (
-          result.map((user) => {
-            return <div key={user._id}>Tag Card</div>;
+        {result.tags.length > 0 ? (
+          result.tags.map((tag) => {
+            return (
+              <Link
+                href={`/tags/${tag._id}`}
+                key={tag._id}
+                className="shadow-light100_darknone"
+              >
+                <article className="background-light900_dark200 light-border flex w-full flex-col rounded-2xl border px-8 py-10 sm:w-[260px]">
+                  <div className="background-light800_dark400 w-fit rounded-sm px-5 py-1.5">
+                    <p className="paragraph-semibold text-dark300_light900">
+                      {tag.name}
+                    </p>
+                  </div>
+                  <p className="small-medium text-dark400_light500 mt-3.5">
+                    <span className="body-semibold primary-text-gradient mr-2.5">
+                      {tag.questions.length}+
+                    </span>{" "}
+                    Questions
+                  </p>
+                </article>
+              </Link>
+            );
           })
         ) : (
           <NoResult
