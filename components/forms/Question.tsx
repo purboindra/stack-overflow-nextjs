@@ -21,6 +21,7 @@ import { questionSchema } from "@/lib/validation";
 import { Badge } from "../ui/badge";
 import Image from "next/image";
 import { createQuestion } from "@/lib/actions/question.action";
+import { useTheme } from "@/context/ThemeProvider";
 
 interface Props {
   mongoUserId: string;
@@ -31,6 +32,8 @@ const type: any = "create";
 const Question = ({ mongoUserId }: Props) => {
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const { mode } = useTheme();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -174,6 +177,8 @@ const Question = ({ mongoUserId }: Props) => {
                       "alignright alignjustify | bullist numlist" +
                       "removeformat | help",
                     content_style: "body { font-family:Inter; font-size:16px }",
+                    skin: mode === "dark" ? "oxide-dark" : "oxide",
+                    content_css: mode === "dark" ? "dark" : "light",
                   }}
                 />
               </FormControl>
