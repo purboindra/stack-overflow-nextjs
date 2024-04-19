@@ -33,7 +33,7 @@ const Question = ({ mongoUserId }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
-  const pahtname = usePathname();
+  const pathname = usePathname();
 
   const form = useForm<z.infer<typeof questionSchema>>({
     resolver: zodResolver(questionSchema),
@@ -46,13 +46,14 @@ const Question = ({ mongoUserId }: Props) => {
 
   async function onSubmit(values: z.infer<typeof questionSchema>) {
     setIsSubmitting(true);
+
     try {
       await createQuestion({
         title: values.title,
         content: values.explanation,
         tags: values.tags,
         author: JSON.parse(mongoUserId),
-        path: pahtname,
+        path: pathname,
       });
 
       router.push("/");
