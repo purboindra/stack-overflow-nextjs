@@ -14,7 +14,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         </section>
         <RightSidebar />
       </div>
-      Toaster
+      {/* Toaster */}
     </main>
   );
 }
