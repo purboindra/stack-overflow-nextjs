@@ -16,10 +16,20 @@ import { Editor } from "@tinymce/tinymce-react";
 import { useTheme } from "@/context/ThemeProvider";
 import { Button } from "../ui/button";
 import Image from "next/image";
+import { createAnswer } from "@/lib/actions/answer.action";
+import { usePathname } from "next/navigation";
 
-const Answer = () => {
+interface Props {
+  authorId: string;
+  questionId: string;
+  question: string;
+}
+
+const Answer = ({ authorId, questionId, question }: Props) => {
   const editorRef = useRef(null);
   const { mode } = useTheme();
+
+  const pathname = usePathname();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -30,10 +40,32 @@ const Answer = () => {
     },
   });
 
-  async function onSubmit(values: z.infer<typeof AnswerSchema>) {}
+  async function onSubmit(values: z.infer<typeof AnswerSchema>) {
+    setIsSubmitting(true);
+
+    try {
+      await createAnswer({
+        content: values.answer,
+        author: JSON.parse(authorId),
+        question: JSON.parse(questionId),
+        path: pathname,
+      });
+
+      form.reset();
+
+      if (editorRef.current) {
+        const editor = editorRef.current as any;
+        editor.setContent("");
+      }
+    } catch (error) {
+      console.log({ error });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
-    <div>
+    <>
       <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
         <h4 className="paragraph-semibold text-dark400_light900">
           Write your answer here
@@ -123,7 +155,7 @@ const Answer = () => {
           </div>
         </form>
       </Form>
-    </div>
+    </>
   );
 };
 
