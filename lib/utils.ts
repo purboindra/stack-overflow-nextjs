@@ -1,6 +1,13 @@
 import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
+export enum VotesEnum {
+  // eslint-disable-next-line no-unused-vars
+  QUESTION,
+  // eslint-disable-next-line no-unused-vars
+  ANSWER,
+}
+
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }

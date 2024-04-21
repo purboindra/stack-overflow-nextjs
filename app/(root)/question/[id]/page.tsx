@@ -6,7 +6,7 @@ import RenderTag from "@/components/shared/RenderTag";
 import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
-import { formatAndDividedNumber, getTimestamp } from "@/lib/utils";
+import { VotesEnum, formatAndDividedNumber, getTimestamp } from "@/lib/utils";
 import { auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +42,16 @@ export default async function page({ params, searchParams }) {
             </p>
           </Link>
           <div className="flex justify-end">
-            <Votes />
+            <Votes
+              type={VotesEnum.QUESTION}
+              itemId={JSON.stringify(result._id)}
+              userId={JSON.stringify(mongoUser?._id)}
+              upvotes={result.upvotes.length}
+              downvotes={result.downvotes.length}
+              hasUpVoted={result.upvotes.includes(mongoUser._id)}
+              hasDownVoted={result.downvotes.includes(mongoUser._id)}
+              hasSaved={mongoUser?.saved.includes(result._id)}
+            />
           </div>
         </div>
         <h2 className="h2-semibold text-dark200_light900 mt-3.5 w-full text-left">
