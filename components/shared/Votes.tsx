@@ -129,18 +129,20 @@ const Votes = ({
           </div>
         </div>
       </div>
-      <Image
-        src={
-          hasSaved
-            ? "/assets/icons/star-filled.svg"
-            : "/assets/icons/star-red.svg"
-        }
-        alt="star"
-        width={18}
-        height={18}
-        className="cursor-pointer"
-        onClick={() => handleSave()}
-      />
+      {type === VotesEnum.QUESTION && (
+        <Image
+          src={
+            hasSaved
+              ? "/assets/icons/star-filled.svg"
+              : "/assets/icons/star-red.svg"
+          }
+          alt="star"
+          width={18}
+          height={18}
+          className="cursor-pointer"
+          onClick={() => handleSave()}
+        />
+      )}
     </div>
   );
 };

@@ -62,8 +62,6 @@ export async function getAllAnswers(params: GetAnswersParams) {
 }
 
 export async function upvoteAnswer(params: AnswerVoteParams) {
-  console.log(params.userId);
-
   try {
     connectToDatabase();
 
