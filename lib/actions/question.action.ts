@@ -171,22 +171,22 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
   }
 }
 
-export async function saveQuestion(params: ToggleSaveQuestionParams) {
-  try {
-    connectToDatabase();
+// export async function saveQuestion(params: ToggleSaveQuestionParams) {
+//   try {
+//     connectToDatabase();
 
-    const { path, questionId, userId } = params;
+//     const { path, questionId, userId } = params;
 
-    await Question.findByIdAndUpdate(questionId, {
-      $addToSet: {
-        saved: userId,
-      },
-    });
+//     await Question.findByIdAndUpdate(questionId, {
+//       $addToSet: {
+//         saved: userId,
+//       },
+//     });
 
-    revalidatePath(path);
-  } catch (error) {
-    console.log(error);
+//     revalidatePath(path);
+//   } catch (error) {
+//     console.log(error);
 
-    throw error;
-  }
-}
+//     throw error;
+//   }
+// }
