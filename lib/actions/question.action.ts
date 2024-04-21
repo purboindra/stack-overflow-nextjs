@@ -8,11 +8,9 @@ import {
   GetQuestionByIdParams,
   GetQuestionsParams,
   QuestionVoteParams,
-  ToggleSaveQuestionParams,
 } from "./shared.types";
 import User from "@/database/user.model";
 import { revalidatePath } from "next/cache";
-import { Error } from "mongoose";
 
 export async function getQuestions(params: GetQuestionsParams) {
   try {
@@ -170,23 +168,3 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     throw error;
   }
 }
-
-// export async function saveQuestion(params: ToggleSaveQuestionParams) {
-//   try {
-//     connectToDatabase();
-
-//     const { path, questionId, userId } = params;
-
-//     await Question.findByIdAndUpdate(questionId, {
-//       $addToSet: {
-//         saved: userId,
-//       },
-//     });
-
-//     revalidatePath(path);
-//   } catch (error) {
-//     console.log(error);
-
-//     throw error;
-//   }
-// }
