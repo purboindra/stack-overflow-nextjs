@@ -60,3 +60,10 @@ export const formatAndDividedNumber = (num: number): string => {
     return `${num}`;
   }
 };
+export function getJoinedDate(date: Date): string {
+  const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "long",
+  };
+  return date.toLocaleDateString("en-US", options);
+}
