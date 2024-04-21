@@ -5,9 +5,11 @@ import {
   downvoteQuestion,
   upvoteQuestion,
 } from "@/lib/actions/question.action";
+import { toggleSaveQuestion } from "@/lib/actions/user.action";
 import { VotesEnum, formatAndDividedNumber } from "@/lib/utils";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
+import path from "path";
 import React from "react";
 
 interface Props {
@@ -34,7 +36,13 @@ const Votes = ({
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleSave = () => {};
+  const handleSave = async () => {
+    await toggleSaveQuestion({
+      path: pathname,
+      userId: JSON.parse(userId),
+      questionId: JSON.parse(itemId),
+    });
+  };
 
   const handleVote = async (action: string) => {
     if (!userId) {

@@ -50,7 +50,9 @@ export default async function page({ params, searchParams }) {
               downvotes={result.downvotes.length}
               hasUpVoted={result.upvotes.includes(mongoUser._id)}
               hasDownVoted={result.downvotes.includes(mongoUser._id)}
-              hasSaved={mongoUser?.saved.includes(result._id)}
+              hasSaved={mongoUser.saved.includes(
+                JSON.parse(JSON.stringify(result._id))
+              )}
             />
           </div>
         </div>
