@@ -20,6 +20,7 @@ interface Props {
   views: number;
   answers: Array<Object>;
   createdAt: Date;
+  clerkId?: string;
 }
 
 const QuestionCard = ({
@@ -30,6 +31,7 @@ const QuestionCard = ({
   upvote,
   views,
   answers,
+  clerkId,
   createdAt,
 }: Props) => {
   return (
