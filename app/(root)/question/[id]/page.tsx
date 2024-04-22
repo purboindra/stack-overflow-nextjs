@@ -46,8 +46,8 @@ export default async function page({ params, searchParams }) {
           <div className="flex justify-end">
             <Votes
               type={VotesEnum.QUESTION}
-              itemId={JSON.stringify(result._id)}
-              userId={JSON.stringify(mongoUser?._id)}
+              itemId={result._id}
+              userId={mongoUser?._id}
               upvotes={result.upvotes.length}
               downvotes={result.downvotes.length}
               hasUpVoted={result.upvotes.includes(mongoUser._id)}

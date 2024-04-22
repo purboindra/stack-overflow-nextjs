@@ -38,8 +38,8 @@ const Votes = ({
 
   useEffect(() => {
     viewQuestion({
-      questionId: JSON.parse(JSON.stringify(itemId)),
-      userId: userId ? JSON.parse(JSON.stringify(userId)) : undefined,
+      questionId: itemId,
+      userId: userId || undefined,
     });
   }, [itemId, userId, pathname, router]);
 

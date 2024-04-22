@@ -11,7 +11,7 @@ export async function viewQuestion(params: ViewQuestionParams) {
 
     const { questionId, userId } = params;
 
-    await Question.findByIdAndUpdate(JSON.parse(questionId), {
+    await Question.findByIdAndUpdate(questionId, {
       $inc: { views: 1 },
     });
 
@@ -19,11 +19,8 @@ export async function viewQuestion(params: ViewQuestionParams) {
       const existingInteraction = await Interaction.findOne({
         user: userId,
         action: "view",
-        question: JSON.parse(questionId),
+        question: questionId,
       });
-
-      console.log({ existingInteraction });
-
       if (existingInteraction) return console.log("User has already viewed.");
 
       await Interaction.create({
