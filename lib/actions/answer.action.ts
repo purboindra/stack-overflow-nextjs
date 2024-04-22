@@ -5,11 +5,15 @@ import { connectToDatabase } from "../mongoose";
 import {
   AnswerVoteParams,
   CreateAnswerParams,
+  DeleteAnswerParams,
   GetAnswersParams,
 } from "./shared.types";
 import Answer from "@/database/answer.model";
 import Question from "@/database/question.model";
 import console from "console";
+import Interaction from "@/database/interaction.model";
+import { Tag } from "lucide-react";
+import path from "path";
 
 export async function createAnswer(params: CreateAnswerParams) {
   try {
@@ -144,6 +148,35 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
   } catch (error) {
     console.log(error);
 
+    throw error;
+  }
+}
+
+export async function deleteAnswer(params: DeleteAnswerParams) {
+  try {
+    connectToDatabase();
+
+    const { path, answerId } = params;
+
+    const answer = await Answer.findById(answerId);
+
+    if (!answer) throw new Error("Answer not found");
+
+    await answer.deleteOne({ _id: answerId });
+    await Question.deleteMany(
+      { question: answerId },
+      {
+        $pull: {
+          answers: answerId,
+        },
+      }
+    );
+
+    await Interaction.deleteMany({ answer: answerId });
+
+    revalidatePath(path);
+  } catch (error) {
+    console.log(error);
     throw error;
   }
 }
