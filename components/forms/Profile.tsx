@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import React, { useState } from "react";
+import React from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 import {
@@ -15,9 +15,9 @@ import {
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
-import { useFormStatus } from "react-dom";
-import { usePathname, useRouter } from "next/navigation";
-import { updateUser } from "@/lib/actions/user.action";
+import { useFormState, useFormStatus } from "react-dom";
+import { usePathname } from "next/navigation";
+import { updatedUser } from "@/lib/actions/user.action";
 import { ProfileSchema } from "@/lib/validation";
 
 interface Props {
@@ -25,12 +25,29 @@ interface Props {
   user: string;
 }
 
-const Profile = ({ clerkId, user }: Props) => {
-  // const { pending } = useFormStatus();
+const initialState = {
+  message: "",
+};
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <Button
+      type="submit"
+      disabled={pending}
+      className="primary-gradient w-fit text-white"
+    >
+      {pending ? "Loading..." : "Add"}
+    </Button>
+  );
+}
+
+const Profile = ({ clerkId, user }: Props) => {
   const pathname = usePathname();
+  const updateUserWithId = updatedUser.bind(null, { clerkId, path: pathname });
+
+  const [_, formAction] = useFormState(updateUserWithId, initialState);
 
   const parsedUser = JSON.parse(user);
 
@@ -45,36 +62,9 @@ const Profile = ({ clerkId, user }: Props) => {
     },
   });
 
-  const onSubmit = async (values: z.infer<typeof ProfileSchema>) => {
-    setIsSubmitting(true);
-
-    try {
-      await updateUser({
-        clerkId,
-        updateData: {
-          name: values.name,
-          username: values.username,
-          portfoliowebsite: values.portfoliowebsite,
-          location: values.location,
-          bio: values.bio,
-        },
-        path: pathname,
-      });
-
-      router.back();
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="mt-9 flex w-full flex-col gap-9"
-      >
+      <form action={formAction} className="mt-9 flex w-full flex-col gap-9">
         <FormField
           name="name"
           control={form.control}
@@ -167,14 +157,9 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
+
         <div className="mt-7 flex justify-end">
-          <Button
-            disabled={isSubmitting}
-            type="submit"
-            className="primary-gradient w-fit"
-          >
-            Submit
-          </Button>
+          <SubmitButton />
         </div>
       </form>
     </Form>

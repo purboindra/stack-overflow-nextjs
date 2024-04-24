@@ -17,6 +17,9 @@ import { revalidatePath } from "next/cache";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import Answer from "@/database/answer.model";
+import { ProfileSchema } from "../validation";
+import { redirect } from "next/navigation";
+import { z } from "zod";
 
 export async function getUserById(params: any) {
   try {
@@ -268,6 +271,54 @@ export async function getUserAnswers(params: GetUserStatsParams) {
     };
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+}
+
+type updatedParams = {
+  clerkId: string;
+  path: string;
+};
+
+export async function updatedUser(
+  params: updatedParams,
+  prevState: any,
+  formData: FormData
+) {
+  try {
+    connectToDatabase();
+
+    const validatedFields = ProfileSchema.safeParse({
+      name: formData.get("name"),
+      username: formData.get("username"),
+      portfoliowebsite: formData.get("portfoliowebsite"),
+      location: formData.get("location"),
+      bio: formData.get("bio"),
+    });
+
+    if (!validatedFields.success) {
+      console.log("TIDAK VALID");
+      return {
+        errors: validatedFields.error.flatten().fieldErrors,
+      };
+    }
+
+    const { clerkId, path } = params;
+
+    console.log(clerkId);
+    console.log(validatedFields.data);
+
+    await User.findOneAndUpdate({ clerkId }, validatedFields.data, {
+      new: true,
+    });
+
+    revalidatePath(path);
+    redirect(`/profile/${clerkId}`);
+  } catch (error) {
+    console.log(error);
+    if (error instanceof z.ZodError) {
+      return { message: "Failed to update user" };
+    }
     throw error;
   }
 }

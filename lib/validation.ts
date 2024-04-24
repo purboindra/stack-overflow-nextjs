@@ -1,4 +1,4 @@
-import { z } from "zod";
+import * as z from "zod";
 
 export const questionSchema = z.object({
   title: z
@@ -16,7 +16,9 @@ export const AnswerSchema = z.object({
 export const ProfileSchema = z.object({
   name: z.string().min(5),
   username: z.string().min(1),
-  portfoliowebsite: z.string().url().min(1),
+  portfoliowebsite: z.string().url().min(1).optional(),
   location: z.string().min(5).max(50),
   bio: z.string().min(10).max(150),
 });
+
+export type ProfileValues = z.infer<typeof ProfileSchema>;
