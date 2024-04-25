@@ -2,31 +2,10 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import RenderTag from "./RenderTag";
+import { getHotQuestions } from "@/lib/actions/question.action";
 
-export default function RightSidebar() {
-  const hotQuestions = [
-    {
-      id: 1,
-      title: "How do i use express as custom server in NextJS?",
-    },
-    {
-      id: 2,
-      title: "Cascading delete in SQLAlchemy?",
-    },
-    {
-      id: 3,
-      title: "How to perfectly center a dive with tailwind css?",
-    },
-    {
-      id: 4,
-      title:
-        "Best practice for data fetching in Next Js application with server side rendering?",
-    },
-    {
-      id: 5,
-      title: "Redux toolkit not updating state as expected?",
-    },
-  ];
+export default async function RightSidebar() {
+  const hotQuestions = await getHotQuestions();
 
   const popularTags = [
     {
@@ -64,7 +43,7 @@ export default function RightSidebar() {
           {hotQuestions.map((question) => {
             return (
               <Link
-                href={`/questions/${question.id}`}
+                href={`/question/${question.id}`}
                 key={question.id}
                 className="flex cursor-pointer items-center justify-between gap-7"
               >
