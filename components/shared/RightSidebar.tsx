@@ -3,37 +3,11 @@ import Link from "next/link";
 import React from "react";
 import RenderTag from "./RenderTag";
 import { getHotQuestions } from "@/lib/actions/question.action";
+import { getPopularTags } from "@/lib/actions/tag.action";
 
 export default async function RightSidebar() {
   const hotQuestions = await getHotQuestions();
-
-  const popularTags = [
-    {
-      _id: 1,
-      name: "javascript",
-      totalQuestions: 5,
-    },
-    {
-      _id: 2,
-      name: "react",
-      totalQuestions: 8,
-    },
-    {
-      _id: 3,
-      name: "next js",
-      totalQuestions: 10,
-    },
-    {
-      _id: 4,
-      name: "golang",
-      totalQuestions: 12,
-    },
-    {
-      _id: 5,
-      name: "flutter",
-      totalQuestions: 13,
-    },
-  ];
+  const popularTags = await getPopularTags();
 
   return (
     <section className="background-light900_dark200 light-border sticky right-0 top-0 flex h-screen w-[350px] flex-col overflow-y-auto border-l p-6 pt-36 shadow-light-300 dark:shadow-none max-sm:hidden">
@@ -71,7 +45,7 @@ export default async function RightSidebar() {
                 key={tag._id}
                 _id={tag._id}
                 name={tag.name}
-                totalQuestions={tag.totalQuestions}
+                totalQuestions={tag.numberOfQuestions}
                 showCount
               />
             );
