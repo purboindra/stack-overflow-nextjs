@@ -12,6 +12,7 @@ function HomeFilters() {
   const router = useRouter();
 
   const handleTypeClik = (item: string) => {
+    console.log(active, item);
     if (active === item) {
       setActive("");
       const newUrl = formUrlQuery({
