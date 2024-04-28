@@ -21,7 +21,7 @@ export default async function page({ params, searchParams }: URLProps) {
 
       <div className="mt-11 w-full">
         <LocalSearchbar
-          route="/"
+          route={`/tags/${params.id}`}
           iconPosition="left"
           imgSrc="/assets/icons/search.svg"
           placeholder="Search for questions"
@@ -35,8 +35,9 @@ export default async function page({ params, searchParams }: URLProps) {
               <QuestionCard
                 key={question._id}
                 _id={question._id.toString()}
+                // TODO FIX THIS
                 title={question.title}
-                tags={question.tags}
+                tags={JSON.stringify(question.tags)}
                 author={question.author}
                 upvote={question.upvotes}
                 views={question.views}
