@@ -1,21 +1,46 @@
 "use client";
 
 import { HomePageFilters } from "@/contants/filter";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../ui/button";
+import { useRouter, useSearchParams } from "next/navigation";
+import { formUrlQuery } from "@/lib/utils";
 
 function HomeFilters() {
-  const isActive = "newest";
+  const searchParams = useSearchParams();
+  const [active, setActive] = useState("");
+  const router = useRouter();
 
+  const handleTypeClik = (item: string) => {
+    if (active === item) {
+      setActive("");
+      const newUrl = formUrlQuery({
+        params: searchParams.toString(),
+        key: "filter",
+        value: item.toLowerCase(),
+      });
+
+      router.push(newUrl, { scroll: false });
+    } else {
+      setActive(item.toLowerCase());
+      const newUrl = formUrlQuery({
+        params: searchParams.toString(),
+        key: "filter",
+        value: item.toLowerCase(),
+      });
+      router.push(newUrl, { scroll: false });
+    }
+  };
   return (
     <div className="mt-10 hidden flex-wrap gap-3 md:flex">
-      {HomePageFilters.map((filter) => (
+      {HomePageFilters.map((item) => (
         <Button
-          key={filter.value}
-          onClick={() => {}}
-          className={`body-medium rounded-lg px-6 py-3 capitalize shadow-none ${isActive === filter.value ? "bg-primary-100 text-primary-500" : "bg-light-800 text-light-500"}`}
+          key={item.value}
+          // onClick={() => {}}
+          className={`body-medium rounded-lg px-6 py-3 capitalize shadow-none ${active === item.value ? "bg-primary-100 text-primary-500" : "bg-light-800 text-light-500"}`}
+          onClickCapture={() => handleTypeClik(item.name)}
         >
-          {filter.name}
+          {item.name}
         </Button>
       ))}
     </div>
