@@ -15,6 +15,7 @@ export default async function Colletion({ searchParams }: SearchParamsProps) {
   const result = await getSavedQuestion({
     clerkId: userId!,
     searchQuery: searchParams.q,
+    filter: searchParams.filter,
   });
 
   return (
