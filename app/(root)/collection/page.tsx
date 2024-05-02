@@ -1,6 +1,7 @@
 import QuestionCard from "@/components/cards/QuestionCard";
 import Filter from "@/components/shared/Filter";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { QuestionFilters } from "@/contants/filter";
 import { getSavedQuestion } from "@/lib/actions/user.action";
@@ -16,6 +17,7 @@ export default async function Colletion({ searchParams }: SearchParamsProps) {
     clerkId: userId!,
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
@@ -64,6 +66,12 @@ export default async function Colletion({ searchParams }: SearchParamsProps) {
           />
         )}
       </div>
+
+      {result.questions.length > 0 && (
+        <div className="mt-12">
+          <Pagination pageNumber={1} isNext={result.isNext} />
+        </div>
+      )}
     </>
   );
 }
