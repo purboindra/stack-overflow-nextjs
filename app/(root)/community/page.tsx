@@ -1,5 +1,6 @@
 import UserCard from "@/components/cards/UserCard";
 import Filter from "@/components/shared/Filter";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { UserFilters } from "@/contants/filter";
 import { getAllUsers } from "@/lib/actions/user.action";
@@ -11,12 +12,12 @@ export default async function page({ searchParams }: SearchParamsProps) {
   const result = await getAllUsers({
     searchQuery: searchParams.q,
     filter: searchParams.filter,
+    page: searchParams.page ? +searchParams.page : 1,
   });
 
   return (
     <>
       <h1 className="h1-bold text-dark100_light900">All Users</h1>
-
       <div className="mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center">
         <LocalSearchbar
           route="/"
@@ -31,8 +32,8 @@ export default async function page({ searchParams }: SearchParamsProps) {
         />
       </div>
       <section className="mt-12 flex flex-wrap gap-4">
-        {result.length > 0 ? (
-          result.map((user) => {
+        {result.users.length > 0 ? (
+          result.users.map((user) => {
             return <UserCard key={user._id} user={user} />;
           })
         ) : (
@@ -44,6 +45,12 @@ export default async function page({ searchParams }: SearchParamsProps) {
           </div>
         )}
       </section>
+      <div className="mt-12">
+        <Pagination
+          isNext={result.isNext}
+          pageNumber={searchParams.page ? +searchParams.page : 1}
+        />
+      </div>
     </>
   );
 }
