@@ -10,6 +10,7 @@ import { SignedIn, auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import { URLSearchParams } from "url";
 
 export default async function page({ params, searchParams }: URLSearchParams) {
   const result = await getUseInfo({ userId: params.id });

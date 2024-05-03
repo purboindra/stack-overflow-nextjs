@@ -1,5 +1,6 @@
 import QuestionCard from "@/components/cards/QuestionCard";
 import NoResult from "@/components/shared/NoResult";
+import Pagination from "@/components/shared/Pagination";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import { IQuestion } from "@/database/question.model";
 import { getQuestionByTagId } from "@/lib/actions/tag.action";
@@ -9,7 +10,7 @@ import React from "react";
 export default async function page({ params, searchParams }: URLProps) {
   const result = await getQuestionByTagId({
     tagId: params.id,
-    page: 1,
+    page: searchParams.page ? +searchParams.page : 1,
     searchQuery: searchParams.q,
   });
 
@@ -18,7 +19,6 @@ export default async function page({ params, searchParams }: URLProps) {
       <h1 className="h1-bold text-dark100_light900">
         {result.tagTitle.toUpperCase()}
       </h1>
-
       <div className="mt-11 w-full">
         <LocalSearchbar
           route={`/tags/${params.id}`}
@@ -37,7 +37,7 @@ export default async function page({ params, searchParams }: URLProps) {
                 _id={question._id.toString()}
                 // TODO FIX THIS
                 title={question.title}
-                tags={JSON.stringify(question.tags)}
+                tags={question.tags}
                 author={question.author}
                 upvote={question.upvotes}
                 views={question.views}
@@ -56,6 +56,12 @@ export default async function page({ params, searchParams }: URLProps) {
             linkTitle="Ask a Question"
           />
         )}
+      </div>
+      <div className="mt-12">
+        <Pagination
+          pageNumber={searchParams.page ? +searchParams.page : 1}
+          isNext={result.isNext}
+        />
       </div>
     </>
   );
