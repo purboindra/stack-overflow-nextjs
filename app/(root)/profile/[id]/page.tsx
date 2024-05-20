@@ -4,7 +4,7 @@ import QuestionTab from "@/components/shared/QuestionTab";
 import Stats from "@/components/shared/Stats";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { getUseInfo } from "@/lib/actions/user.action";
+import { getUserInfo } from "@/lib/actions/user.action";
 import { getJoinedDate } from "@/lib/utils";
 import { SignedIn, auth } from "@clerk/nextjs";
 import Image from "next/image";
@@ -13,7 +13,7 @@ import React from "react";
 import { URLSearchParams } from "url";
 
 export default async function page({ params, searchParams }: URLSearchParams) {
-  const result = await getUseInfo({ userId: params.id });
+  const result = await getUserInfo({ userId: params.id });
 
   const { user, totalQuestions, totalAnswers } = result;
 
@@ -75,7 +75,12 @@ export default async function page({ params, searchParams }: URLSearchParams) {
           </SignedIn>
         </div>
       </div>
-      <Stats totalQuestions={totalQuestions} totalAnswers={totalAnswers} />
+      <Stats
+        reputation={user.reputation}
+        totalQuestions={totalQuestions}
+        totalAnswers={totalAnswers}
+        badges={user.badges}
+      />
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
           <TabsList className="background-light800_dark400 min-h-[42px] p-1">
