@@ -47,7 +47,7 @@ const Profile = ({ clerkId, user }: Props) => {
   const pathname = usePathname();
   const updateUserWithId = updatedUser.bind(null, { clerkId, path: pathname });
 
-  const [_, formAction] = useFormState(updateUserWithId, initialState);
+  const [state, formAction] = useFormState(updateUserWithId, initialState);
 
   const parsedUser = JSON.parse(user);
 

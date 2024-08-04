@@ -358,8 +358,10 @@ export async function getUserInfo(params: GetUserByIdParams) {
         count: questionViews?.totalViews || 0,
       },
     ];
+    // TODO FIX LATER
+    const a = criteria as any;
 
-    const badgeCounts = assignBadgets({ criteria });
+    const badgeCounts = assignBadgets({ criteria: a });
 
     return {
       user,
