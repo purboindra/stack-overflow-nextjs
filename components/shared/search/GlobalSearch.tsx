@@ -13,7 +13,7 @@ export default function GlobalSearch() {
   const searchParams = useSearchParams();
   const query = searchParams.get("q");
 
-  const searchContainerRef = useRef(null);
+  const searchContainerRef: React.Ref<HTMLInputElement> = useRef(null);
 
   const [search, setSearch] = useState(query || "");
   const [isOpen, setIsOpen] = useState(false);
