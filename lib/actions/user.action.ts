@@ -21,7 +21,6 @@ import { ProfileSchema } from "../validation";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import { BadgeCriteriaType } from "@/types";
-import { count } from "console";
 import { assignBadgets } from "../utils";
 
 export async function getUserById(params: any) {

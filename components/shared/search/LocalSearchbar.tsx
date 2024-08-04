@@ -51,7 +51,7 @@ function LocalSearchbar({
     }, 400);
 
     return () => clearTimeout(delayDebonceFn);
-  }, [search, route, pathname, searchParams, query]);
+  }, [search, route, pathname, searchParams, query, router]);
 
   return (
     <div

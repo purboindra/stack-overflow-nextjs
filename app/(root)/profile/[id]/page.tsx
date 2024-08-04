@@ -6,13 +6,13 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserInfo } from "@/lib/actions/user.action";
 import { getJoinedDate } from "@/lib/utils";
+import { URLProps } from "@/types";
 import { SignedIn, auth } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { URLSearchParams } from "url";
 
-export default async function page({ params, searchParams }: URLSearchParams) {
+export default async function page({ params, searchParams }: URLProps) {
   const result = await getUserInfo({ userId: params.id });
 
   const { user, totalQuestions, totalAnswers } = result;
