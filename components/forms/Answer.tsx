@@ -80,6 +80,7 @@ const Answer = ({ authorId, questionId, question }: Props) => {
       const aiAnswer = await response.json();
 
       console.log(aiAnswer);
+      console.log("isSubmittingAi", isSubmittingAi);
 
       // alert(aiAnswer.reply);
     } catch (error) {

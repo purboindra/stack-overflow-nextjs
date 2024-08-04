@@ -5,7 +5,7 @@ import OpenAI from "openai";
 const openai = new OpenAI();
 
 export async function POST(req: Request) {
-  const { question } = await req.json();
+  // const { question } = await req.json();
 
   try {
     const response = await openai.chat.completions.create({
