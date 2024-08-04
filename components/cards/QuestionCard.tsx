@@ -38,7 +38,7 @@ const QuestionCard = ({
 }: Props) => {
   console.log(author);
 
-  const showActionButtons = clerkId && clerkId === author.clerkId;
+  const showActionButtons = clerkId && clerkId === author._id;
 
   return (
     <div className="card-wrapper rounded-[10px] p-9 sm:px-11">

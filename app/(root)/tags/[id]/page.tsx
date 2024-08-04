@@ -35,11 +35,11 @@ export default async function page({ params, searchParams }: URLProps) {
               <QuestionCard
                 key={question._id}
                 _id={question._id.toString()}
-                // TODO FIX THIS
+                // TODO FIX THIS ANY TYPE
                 title={question.title}
-                tags={question.tags}
-                author={question.author}
-                upvote={question.upvotes}
+                tags={question.tags as any}
+                author={question.author as any}
+                upvote={question.upvotes as any}
                 views={question.views}
                 answers={question.answers}
                 createdAt={question.createdAt}
