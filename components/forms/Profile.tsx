@@ -84,6 +84,9 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
+        {state.errors?.name && (
+          <p className="text-red-500">{state.errors?.name[0]}</p>
+        )}
         <FormField
           name="username"
           control={form.control}
@@ -103,6 +106,9 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
+        {state.errors?.username && (
+          <p className="text-red-500">{state.errors.username[0]}</p>
+        )}
         <FormField
           name="portfoliowebsite"
           control={form.control}
@@ -121,6 +127,9 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
+        {state.errors?.portfoliowebsite && (
+          <p className="text-red-500">{state.errors.portfoliowebsite[0]}</p>
+        )}
         <FormField
           name="location"
           control={form.control}
@@ -138,6 +147,9 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
+        {state.errors?.location && (
+          <p className="text-red-500">{state.errors.location[0]}</p>
+        )}
         <FormField
           name="bio"
           control={form.control}
@@ -157,7 +169,9 @@ const Profile = ({ clerkId, user }: Props) => {
             </FormItem>
           )}
         />
-
+        {state.errors?.bio && (
+          <p className="text-red-500">{state.errors.bio[0]}</p>
+        )}
         <div className="mt-7 flex justify-end">
           <SubmitButton />
         </div>
