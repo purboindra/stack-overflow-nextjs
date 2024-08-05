@@ -19,6 +19,8 @@ export default async function page({ params, searchParams }: URLProps) {
 
   const { userId: clerkId } = auth();
 
+  console.log(user.badges);
+
   return (
     <>
       <div className="flex flex-col-reverse items-start justify-between sm:flex-row">
@@ -75,12 +77,14 @@ export default async function page({ params, searchParams }: URLProps) {
           </SignedIn>
         </div>
       </div>
-      <Stats
-        reputation={user.reputation}
-        totalQuestions={totalQuestions}
-        totalAnswers={totalAnswers}
-        badges={user.badges}
-      />
+      {user.stats && (
+        <Stats
+          reputation={user.reputation}
+          totalQuestions={totalQuestions}
+          totalAnswers={totalAnswers}
+          badges={user.badges}
+        />
+      )}
       <div className="mt-10 flex gap-10">
         <Tabs defaultValue="top-posts" className="flex-1">
           <TabsList className="background-light800_dark400 min-h-[42px] p-1">
