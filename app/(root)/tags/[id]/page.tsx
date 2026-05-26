@@ -33,7 +33,7 @@ export default async function page({ params, searchParams }: URLProps) {
           result.questions.map((question: IQuestion) => {
             return (
               <QuestionCard
-                key={question._id}
+                key={question._id.toString()}
                 _id={question._id.toString()}
                 // TODO FIX THIS ANY TYPE
                 title={question.title}

@@ -7,7 +7,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { getUserInfo } from "@/lib/actions/user.action";
 import { getJoinedDate } from "@/lib/utils";
 import { URLProps } from "@/types";
-import { SignedIn, auth } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -17,7 +18,7 @@ export default async function page({ params, searchParams }: URLProps) {
 
   const { user, totalQuestions, totalAnswers } = result;
 
-  const { userId: clerkId } = auth();
+  const { userId: clerkId } = await auth();
 
   console.log(user.badges);
 
@@ -66,7 +67,7 @@ export default async function page({ params, searchParams }: URLProps) {
           </div>
         </div>
         <div className="flex justify-end max-sm:mb-5 max-sm:w-full sm:mt-3">
-          <SignedIn>
+          <Show when="signed-in">
             {clerkId === user.clerkId && (
               <Link href={"/profile/edit"}>
                 <Button className="paragraph-medium btn-secondary text-dark300_light900 min-h-[46px] min-w-[175px] px-4 py-3">
@@ -74,7 +75,7 @@ export default async function page({ params, searchParams }: URLProps) {
                 </Button>
               </Link>
             )}
-          </SignedIn>
+          </Show>
         </div>
       </div>
       {user.stats && (

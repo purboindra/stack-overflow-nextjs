@@ -3,7 +3,7 @@ import React from "react";
 import RenderTag from "../shared/RenderTag";
 import Metric from "../shared/Metric";
 import { formatAndDividedNumber, getTimestamp } from "@/lib/utils";
-import { SignedIn } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
 import EditDeleteAction from "../shared/EditDeleteAction";
 
 interface Props {
@@ -51,11 +51,11 @@ const QuestionCard = ({
             {title}
           </h3>
         </Link>
-        <SignedIn>
+        <Show when="signed-in">
           {showActionButtons && (
             <EditDeleteAction type="Questions" itemId={JSON.stringify(_id)} />
           )}
-        </SignedIn>
+        </Show>
       </div>
       <div className="mt-3.5 flex flex-wrap gap-2">
         {tags.map((tag) => (

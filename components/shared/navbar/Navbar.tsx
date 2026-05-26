@@ -1,4 +1,4 @@
-import { SignedIn, UserButton } from "@clerk/nextjs";
+import { Show, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -20,12 +20,13 @@ export default function Navbar() {
           Dev <span className="text-primary-500">Overflow</span>
         </p>
       </Link>
-      <GlobalSearch />
+      <React.Suspense fallback={<div className="hidden md:flex text-dark400_light700">Loading...</div>}>
+        <GlobalSearch />
+      </React.Suspense>
       <div className="flex-between gap-5">
         <Theme />
-        <SignedIn>
+        <Show when="signed-in">
           <UserButton
-            afterSignOutUrl="/"
             appearance={{
               elements: {
                 avatarBox: "h-10 w-10",
@@ -35,7 +36,7 @@ export default function Navbar() {
               },
             }}
           />
-        </SignedIn>
+        </Show>
         <MobileNav />
       </div>
     </nav>

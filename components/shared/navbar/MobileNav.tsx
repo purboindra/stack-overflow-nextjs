@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/sheet";
 import Image from "next/image";
 import Link from "next/link";
-import { SignedOut } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
 import { Button } from "../../ui/button";
 import { sidebarLinks } from "@/contants";
 
@@ -81,7 +81,7 @@ export default function MobileNav() {
           <SheetClose asChild>
             <NavContent />
           </SheetClose>
-          <SignedOut>
+          <Show when="signed-out">
             <div className="flex flex-col gap-3">
               <SheetClose asChild>
                 <Link href={"/sign-in"}>
@@ -98,7 +98,7 @@ export default function MobileNav() {
                 </Link>
               </SheetClose>
             </div>
-          </SignedOut>
+          </Show>
         </div>
       </SheetContent>
     </Sheet>
